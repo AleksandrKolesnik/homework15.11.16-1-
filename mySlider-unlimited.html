@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<style>
+		#main {
+			width: 200px;
+			height: 200px;
+			overflow: hidden;
+			color: white;
+		}
+		ul {
+			padding: 0;
+      margin: 0;
+			position: relative;
+			display: table;
+			list-style-type: none;
+		}
+		li {
+			width: 200px;
+			height: 200px;
+			float: left;
+			text-align: center;
+			padding-top: 80px;
+			font-size: 36px;
+		}
+		input{
+			height: 30px;
+			width: 98px;
+			font-size: 20px;
+		}
+		.red {
+			background: red;
+		}
+		.orange {
+			background: orange;
+		}
+		.yellow {
+			background: yellow;
+		}
+		.green {
+			background: green;
+		}
+		.lightblue {
+			background: lightblue;
+		}
+		.blue {
+			background: blue;
+		}
+		.purple {
+			background: purple;
+		}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<ul>
+			<li class="red">red</li>
+			<li class="orange">orange</li>
+			<li class="yellow">yellow</li>
+			<li class="green">green</li>
+			<li class="lightblue">lightblue</li>
+			<li class="blue">blue</li>
+			<li class="purple">purple</li>
+		</ul>
+	</div>
+	<div class="buttons">
+		<input type="button" value="previous">
+		<input type="button" value="next">
+	</div>
+	<script>
+		var myUl = document.querySelector('ul');
+		var childWidth = myUl.firstElementChild.clientWidth;
+		var ulWidth = childWidth * (myUl.children.length + 1);
+		myUl.style.width = ulWidth +'px';
+		myUl.style.left = '0px';
+		var buttons = document.querySelector('.buttons');
+
+		buttons.addEventListener('click', clickFun);
+
+		function clickFun(){
+			var target = event && event.target || srcElement;
+			var attr = target.getAttribute('value');
+			if (!attr) return;
+
+			if(attr == 'next'){
+				var child = myUl.firstElementChild;
+				var htmlByElement = child.innerHTML;
+				var clone = child.cloneNode();
+				clone.innerHTML = htmlByElement;
+				myUl.appendChild(clone);
+				myUl.style.left = - child.clientWidth + 'px';
+				myUl.removeChild(child);
+				myUl.style.left = 0 + 'px';
+			}
+
+			else if (attr == 'previous'){
+				var child = myUl.lastElementChild;
+				var htmlByElement = child.innerHTML;
+				var clone = child.cloneNode();
+				clone.innerHTML = htmlByElement;
+				myUl.insertBefore(clone,myUl.firstElementChild);
+				myUl.removeChild(child);
+			}
+		}
+	</script>
+</body>
+</html>
